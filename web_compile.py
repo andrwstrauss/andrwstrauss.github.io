@@ -8,18 +8,22 @@ html_template = """
 %(body)s
 </body>
 """
+def listdir_nohidden(path):
+    for f in os.listdir(path):
+        if not f.startswith('.'):
+            yield f
 scripts = ""
 body = ""
 directory = '/Users/astrauss/Downloads/website%s'
 site_name = 'AndrewJStrauss'
 #---Import Javascript
 sub_directory = '/js'
-for file in os.listdir(directory%(sub_directory)):
+for file in listdir_nohidden(directory%(sub_directory)):
 	script_import_temp = """<script type="text/javascript" src="%(sub_directory)s/%(file)s"></script>\n""" %vars()
 	scripts +=script_import_temp
 #---Import CSS
 sub_directory = '/css'
-for file in os.listdir(directory%(sub_directory)):
+for file in listdir_nohidden(directory%(sub_directory)):
 	script_import_temp = """<link rel="stylesheet" type="text/css" href="%(sub_directory)s/%(file)s"></script>\n""" %vars()
 	scripts +=script_import_temp
 print(scripts)
@@ -39,7 +43,7 @@ article_template ="""
 sub_directory = '/recipes'
 count = 0
 articles = ""
-for article_title in os.listdir(directory%(sub_directory)):
+for article_title in listdir_nohidden(directory%(sub_directory)):
 	if(count==0):
 		articles+="""<div class="row">"""
 	img = '%(sub_directory)s/%(article_title)s/thumbnail.jpg' %vars()
